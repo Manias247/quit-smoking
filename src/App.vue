@@ -1,30 +1,80 @@
+<script>
+import  HomeView  from '@/components/HomeView.vue';
+import { useAuthStore } from '@/store/modules/store.js'; 
+
+
+export default {
+  
+    components: {
+        HomeView,
+       
+
+    },
+    setup() {
+    const auth = useAuthStore()
+
+    return { auth }
+  },
+    data() {
+        return {
+            welcomeHidden: false,
+        };
+    },
+    methods: {
+        hideWelcome(){
+          this.welcomeHidden = true;
+        }
+
+    }
+
+};
+
+</script>
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <HomeView
+  v-if="!welcomeHidden"
+  @hide-welcome="hideWelcome"/>
+ 
+  <router-view v-if="welcomeHidden"/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+.welcome-heading {
   text-align: center;
-  color: #2c3e50;
+}
+.link {
+  text-decoration: none;
+}
+.main-button {
+  padding: 10px;
+  margin: 10px;
+  width: 150px;
+  border: none;
+}
+.back {
+background-color: rgb(30, 151, 91);
+color: azure;
+padding: 5px;
+width: 100px;
 }
 
-nav {
-  padding: 30px;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.welcome-container {
+  position: absolute;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
