@@ -1,22 +1,3 @@
-<!-- <template>
- 
-  <button class="main-button back">
-    <router-link to="/" class="link back"> Powrót </router-link>
-  </button>
-  <button v-if="auth.isLoggedIn" @click="auth.logout">Logout</button>
-
-  <div>
-    <h1>Profil palacza</h1>
-    <h2>Home</h2>
-    <p v-if="auth.isLoggedIn">Hej, {{ auth.user.username }}!</p>
-    <p v-else>Please log in or register to continue.</p>
-    <button v-if="auth.isLoggedIn" @click="updateItems(1)">+ 1 sztuka</button>
-    <p v-if="auth.isLoggedIn">
-      heetsy/papierosy dzisiaj: {{ auth.user.items }}
-    </p>
-  </div>
-</template> -->
-
 <template>
    <NavigationBar/>
   
@@ -25,14 +6,19 @@
   </button>
   <div>
     
-    <h2>Home</h2>
-    <p v-if="isLoggedIn">Witaj, {{ user.username }}!Przyznaj, na ile {{ user.selectedOption + ending }} się skusiłeś?</p>
-    <p v-else>Zaloguj się, aby kontynuować</p>
+    <div v-if="isLoggedIn">
+    <h2 v-if="isLoggedIn">Witaj, {{ user.username }}!</h2>
+    <br>
+     <h3> Przyznaj, na ile {{ user.selectedOption + ending }} się skusiłeś?</h3>
+    </div>
+    <h1 v-else>Zaloguj się, aby kontynuować</h1>
 
     <form v-if="isLoggedIn" @submit.prevent="addEntry">
+      
 
 
       <div class="user-input-box">
+        <h3>Wypaliłeś łącznie: {{ totalCigarettes }}</h3> <br>
         <label for="entryDate" class="input-heading">Data:</label>
         <input
           type="date"
@@ -69,6 +55,8 @@
           </tr>
         </tbody>
       </table>
+      
+      
     </div>
   
       </div>
@@ -95,6 +83,7 @@ export default {
       entryDate: new Date().toISOString().substring(0, 10),
       cigaretteCount: "",
       ending: "ów",
+      totalCigarettes: "",
     };
   },
   computed: {
@@ -110,6 +99,8 @@ export default {
     selectedOption() {
       return useAuthStore().selectedOption;
     },
+
+  
   },
   methods: {
     addEntry() {
@@ -119,13 +110,17 @@ export default {
         count: this.cigaretteCount,
       };
       if (!auth.user.history) {
-        auth.user.history = []; // Initialize history array if it doesn't exist
+        auth.user.history = [];
+        auth.user.totalCigarettes = 0; // Initialize history array if it doesn't exist
       }
       auth.user.history.push(newEntry);
+      this.totalCigarettes += this.cigaretteCount;
+      this.totalCigarettes = parseInt(this.totalCigarettes);
       auth.updateUser(); 
       this.entryDate = "";
       this.cigaretteCount = "";
     },
+   
   },
 };
 </script>

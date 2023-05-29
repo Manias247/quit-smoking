@@ -6,13 +6,11 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     userID: null,
     selectedOption: null,
-    // smokingHistory: {
-    //   entries: [],
-    //   totalCigarettes: 0,
-    // },
+    totalCigarettes: null,
+    
   }),
   actions: {
-    register({ username, password, selectedOption }) {
+    register({ username, password, selectedOption, totalCigarettes }) {
       
       const users = JSON.parse(localStorage.getItem('users')) || [];
       const existingUser = users.find(user => user.username === username);
@@ -20,7 +18,7 @@ export const useAuthStore = defineStore('auth', {
         throw new Error('Username already exists');
       }
       const userID = users.length + 1; 
-      const newUser = {userID, username, password, items: 0, history: [], selectedOption };
+      const newUser = {userID, username, password, items: 0, history: [], totalCigarettes, selectedOption };
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
       console.log(users);
@@ -48,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
           return user;
         });
         localStorage.setItem('users', JSON.stringify(updatedUsers));
-      }
-  }
-})
+      },
+    }
+  })
 
