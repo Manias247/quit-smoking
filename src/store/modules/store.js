@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     userID: null,
     selectedOption: null,
-    totalCigarettes: null,
+    totalCigarettes: 0,
     
   }),
   actions: {
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore('auth', {
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const updatedUsers = users.map(user => {
           if (user.username === this.user.username) {
-            return { ...this.user };
+            return { ...this.user, totalCigarettes: Number(this.user.totalCigarettes) };
           }
           return user;
         });
