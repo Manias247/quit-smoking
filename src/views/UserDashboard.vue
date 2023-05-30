@@ -1,8 +1,8 @@
 <template>
   <NavigationBar/>
  
- <button @click="logout" class="main-button back">
-   <!-- <router-link to="/" class="link back"> Powrót </router-link> -->
+ <button @click="logout" class="main-button back"> Wyloguj
+
  </button>
  <div>
    
@@ -10,6 +10,25 @@
    <h2 v-if="isLoggedIn">Witaj, {{ user.username }}!</h2>
    <br>
     <h3> Przyznaj, na ile {{ user.selectedOption + ending }} się skusiłeś?</h3>
+    <div>
+          <h3 class="input-heading">Inni użytkownicy:</h3>
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>Użytkownik:</th>
+                <th>Suma dymków:</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="otherUser in otherUsers" :key="otherUser.userID">
+                <td>{{ otherUser.username }}</td>
+                <td>{{ otherUser.totalCigarettes }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+ 
+    
    </div>
    <h1 v-else>Zaloguj się, aby kontynuować</h1>
 
@@ -18,7 +37,8 @@
 
 
      <div class="user-input-box">
-       <h3>Wypaliłeś łącznie: {{ user.totalCigarettes }}</h3> <br>
+       <h4>Wypaliłeś łącznie: {{ user.totalCigarettes }}</h4> <br>
+       <h4>Uczestniczysz już: {{ user.uniqueDays  }} dni</h4>
        <label for="entryDate" class="input-heading">Data:</label>
        <input
          type="date"
@@ -94,11 +114,22 @@ export default {
   
    user() {
      const auth = useAuthStore();
-     return auth.user;
+     const user = auth.user;
+      if (user) {
+      const uniqueDays = new Set(user.history.map((entry) => entry.date)).size;
+      return { ...user, uniqueDays };
+    }
+    return null;
    },
    selectedOption() {
      return useAuthStore().selectedOption;
    },
+   otherUsers() {
+  
+  return useAuthStore().users;
+},
+   
+  
 
  
  },
@@ -111,10 +142,10 @@ export default {
      };
      if (!auth.user.history) {
        auth.user.history = [];
-       auth.user.totalCigarettes = 0; // Initialize history array if it doesn't exist
+       auth.user.totalCigarettes = 0;
      }
      auth.user.history.push(newEntry);
-     
+
      auth.user.totalCigarettes = auth.user.history.reduce(
     (total, entry) => total + entry.count,
     0
