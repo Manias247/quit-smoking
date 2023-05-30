@@ -183,8 +183,5 @@ export default {
   
   
 }
-/* tr:last-child {
- border-bottom: none;
-} */
 
 </style>
