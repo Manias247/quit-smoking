@@ -5,6 +5,7 @@ import AboutView from '../views/AboutView.vue';
 import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import UserDashboard from '../views/UserDashboard.vue';
+import UsersGroup from '@/views/UsersGroup.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: "/UserDashboard",
     name: "UserDashboard",
     component: UserDashboard,
+  },
+  {
+    path: "/UsersGroup",
+    name: "UsersGroup",
+    component: UsersGroup,
   },
 ];
 const router = createRouter({

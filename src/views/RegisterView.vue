@@ -12,6 +12,7 @@
           id="username"
           class="main-input"
           v-model="username"
+          autocomplete="off"
           required
         />
       </div>
@@ -23,31 +24,32 @@
           id="password"
           class="main-input"
           v-model="password"
+          autocomplete="off"
           required
         />
-        <button type="submit" class="main-button">Zatwierdź</button>
-        <span>12345678</span>
-      </div>
-      <div class="choice-boxes">
-      <div class="user-input-box">
+        <button type="submit" class="start-button register">Zatwierdź</button>
         <h2>Co wolisz?</h2>
-        <label for="heets" class="input-heading">Heets</label>
+        <div class="choice-boxes">
+      <div class="user-input-box">
+        
+        <label for="heets" class="input-heading radio-head">Heets</label>
         <input
           type="radio"
           id="heets"
-          class="main-input"
+          class="main-input radio"
           v-model="selectedOption"
           value="heets"
+          
           required
         />
     
       </div>
       <div class="user-input-box">
-        <label for="cigar" class="input-heading">Papieros</label>
+        <label  for="cigar"  class="input-heading radio-head">Papieros</label>
         <input
           type="radio"
           id="cigar"
-          class="main-input"
+          class="main-input radio"
           v-model="selectedOption"
           value="papieros"
           required
@@ -55,6 +57,9 @@
         
       </div>
     </div>
+        <span>12345678</span>
+      </div>
+    
       
     </form>
   </div>
@@ -72,6 +77,7 @@ export default {
       username: '',
       password: '',
       selectedOption: null,
+      colorChanged: false,
     }
   },
   methods: {
@@ -83,7 +89,8 @@ export default {
       } catch (error) {
         alert(error.message)
       }
-    }
+    },
+    
   }
 }
 
@@ -97,6 +104,7 @@ export default {
   padding: 10px;
   margin: 10px;
   width: 200px;
+  
 }
 .user-input-box {
   display: flex;
@@ -108,4 +116,14 @@ export default {
   margin-bottom: 5px;
   text-align: center;
 }
+.choice-boxes {
+  display: flex;
+  flex-direction: row;
+ 
+}
+
+
+
+
+
 </style>

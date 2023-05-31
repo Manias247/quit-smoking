@@ -56,12 +56,19 @@ export default {
   margin: 10px;
   width: 150px;
   border: none;
+  transition: border-radius 0.3s ease; 
+}
+.main-button:hover {
+  border-radius: 30px;
 }
 .back {
 background-color: rgb(30, 151, 91);
 color: azure;
 padding: 5px;
 width: 100px;
+}
+.back:hover {
+  background-color: rgb(23, 184, 104);
 }
 
 .container {

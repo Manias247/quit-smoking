@@ -10,6 +10,7 @@
           id="username"
           class="main-input"
           v-model="username"
+          autocomplete="off"
           required
         />
       </div>
@@ -21,9 +22,10 @@
           id="password"
           class="main-input"
           v-model="password"
+          autocomplete="off"
           required
         />
-        <button type="submit" class="main-button">Zatwierdź</button>
+        <button type="submit" class="start-button login">Zatwierdź</button>
         <span>12345678</span>
       </div>
     </form>
